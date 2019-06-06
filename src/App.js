@@ -1,26 +1,37 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-function App() {
+import { connect } from 'react-redux';
+import { ageUp, ageDown } from './store/actions';
+function App(props) {
+  const history = props.history.map(h => <li>{h}</li>)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Age:<span> {props.person.age}</span></div>
+      <div>
+        <button
+          type="button"
+          onClick={props.handleUp}>Age up</button>
+        <button
+          type="button"
+          onClick={props.handleDown}>Age Down</button>
+      </div>
+      <ul>
+        {history}
+      </ul>
     </div>
   );
 }
 
-export default App;
+const state = (state) => {
+   return state;
+}
+const dispatch = (dispatch) => {
+  return {
+    handleUp: () => dispatch(ageUp(10)),
+    handleDown: () => dispatch(ageDown(10))
+  }
+
+
+}
+export default connect(state, dispatch)(App);
